@@ -49,6 +49,28 @@ config OV5647
 	---help---
 	  OV 5M Bayer Sensor with AutoFocus
 
+config SEIX006
+    bool "Sensor sexi006"
+    depends on MSM_CAMERA
+    default y
+    ---help---
+      This is a camera driver for the sexi006 sensor
+          
+config OVM7692
+    bool "Sensor ovm7692"
+	depends on MSM_CAMERA
+	---help---
+	  Omnivision VGA fixed focus sensor
+
+config MT9V114
+    bool "Sensor mt9v114"
+	depends on MSM_CAMERA
+	---help---
+	  AAC/Heptagon VGA fixed focus sensor
+#	Used as front sensor
+#	Uses parallel interface
+#	Previously known as Hydrogen
+
 config AD5046_ACT
 	bool "Lens actuator ad5046"
 	depends on MSM_CAMERA && OV5647
@@ -150,6 +172,20 @@ config QS_S5K4E1
 	---help---
 	  Samsung 5M with Autofocus
 
+config SEMC_CAMERA_MODULE
+	bool "SEMC specific camera (Main camera)"
+	depends on MSM_CAMERA
+	default y
+	---help---
+	  SEMC specific camera module
+
+config SEMC_SUB_CAMERA_MODULE
+	bool "SEMC specific camera (Sub camera)"
+	depends on MSM_CAMERA
+	default y
+	---help---
+	  SEMC specific sub camera module
+
 config S5K4E1
 	bool "Sensor Sensor s5k4e1 (Samsung 5M)"
 	depends on MSM_CAMERA
@@ -243,8 +279,8 @@ config IMX091_EEPROM
 
 config MSM_GEMINI
 	tristate "Qualcomm MSM Gemini Jpeg Engine support"
-	depends on MSM_CAMERA && (ARCH_MSM7X30 || ARCH_MSM8X60 || ARCH_MSM8960)
-	default n
+	depends on MSM_CAMERA && (ARCH_MSM7X30 || ARCH_MSM8X60)
+	default M
 	---help---
 	  Enable support for Gemini Jpeg Engine
 
