@@ -18,5 +18,5 @@ static struct fpc_connector fpc_test_connections[] = {
 
 struct fpc_connections_set fpc_connections_set = {
 	.connections = fpc_test_connections,
-	.num = ARRAY_SIZE(fpc_test_connections),
+//	.num = ARRAY_SIZE(fpc_test_connections),
 };

@@ -1684,7 +1684,7 @@ end:
 }
 
 
-static ssize_t cy8ctma300_bl_fw_read(struct file *file, struct kobject *kobj,
+static ssize_t cy8ctma300_bl_fw_read(struct kobject *kobj,
 	struct bin_attribute *bin_attr,
 	char *buf, loff_t pos, size_t size)
 {

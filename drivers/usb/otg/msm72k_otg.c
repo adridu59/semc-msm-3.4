@@ -1692,6 +1692,17 @@ static void msm_otg_sm_work(struct work_struct *w)
 			break;
 		}
 
+		/* Wait for a charger to be initialized. */
+		if (dev->pdata->chg_is_initialized &&
+				!dev->pdata->chg_is_initialized()) {
+			msleep(WAIT_CHARGER_INIT_INTERVAL);
+			if ((jiffies - dev->wait_charger_init_start) <
+				msecs_to_jiffies(WAIT_CHARGER_INIT_TIMEOUT)) {
+				work = 1;
+				break;
+			}
+		}
+
 		/* Reset both phy and link */
 		otg_reset(&dev->phy, 1);
 

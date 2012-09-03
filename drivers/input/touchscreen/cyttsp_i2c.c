@@ -27,6 +27,7 @@
  *
  */
 
+#include <linux/slab.h>
 #include "cyttsp_core.h"
 
 #include <linux/i2c.h>

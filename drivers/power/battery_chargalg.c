@@ -16,6 +16,7 @@
 #include <linux/module.h>
 #include <linux/platform_device.h>
 #include <linux/power_supply.h>
+#include <linux/slab.h>
 #include <linux/string.h>
 #include <linux/time.h>
 #include <linux/workqueue.h>

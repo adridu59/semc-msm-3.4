@@ -10,6 +10,7 @@
  * of the License, or (at your option) any later version.
  */
 
+#include <linux/slab.h>
 #include <linux/ctype.h>
 #include <linux/err.h>
 #include <linux/kernel.h>

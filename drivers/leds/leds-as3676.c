@@ -10,6 +10,7 @@
 
 #include <linux/i2c.h>
 #include <linux/leds.h>
+#include <linux/slab.h>
 #include <linux/module.h>
 #include <linux/workqueue.h>
 #include <linux/leds-as3676.h>

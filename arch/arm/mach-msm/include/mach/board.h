@@ -90,6 +90,21 @@ struct msm_camera_legacy_device_platform_data {
 #define MSM_CAMERA_FLASH_NONE 0
 #define MSM_CAMERA_FLASH_LED  1
 
+enum msm_camera_sensor_pwr_type {
+MSM_CAMERA_SENSOR_PWR_NONE,
+MSM_CAMERA_SENSOR_PWR_GPIO,
+MSM_CAMERA_SENSOR_PWR_VREG,
+MSM_CAMERA_SENSOR_PWR_MAX
+};
+
+struct msm_camera_sensor_pwr {
+enum msm_camera_sensor_pwr_type type;
+union {
+const char *name;
+int number;
+} resource;
+};
+
 #define MSM_CAMERA_FLASH_SRC_PMIC (0x00000001<<0)
 #define MSM_CAMERA_FLASH_SRC_PWM  (0x00000001<<1)
 #define MSM_CAMERA_FLASH_SRC_CURRENT_DRIVER	(0x00000001<<2)
@@ -274,6 +289,7 @@ struct msm_camera_sensor_info {
 	const char *sensor_name;
 	int sensor_reset_enable;
 	int sensor_reset;
+	int sub_sensor_reset;
 	int sensor_pwd;
 	int vcm_pwd;
 	int vcm_enable;
@@ -286,6 +302,10 @@ struct msm_camera_sensor_info {
 	struct msm_camera_sensor_flash_data *flash_data;
 	int csi_if;
 	struct msm_camera_csi_params csi_params;
+	struct msm_camera_sensor_pwr vcam_io;
+	struct msm_camera_sensor_pwr vcam_sd;
+	struct msm_camera_sensor_pwr vcam_af;
+	struct msm_camera_sensor_pwr vcam_sa;
 	struct msm_camera_sensor_strobe_flash_data *strobe_flash_data;
 	char *eeprom_data;
 	enum msm_camera_type camera_type;
@@ -392,6 +412,9 @@ struct msm_panel_common_pdata {
 	int (*vga_switch)(int select_vga);
 	int *gpio_num;
 	u32 mdp_max_clk;
+	int mdp_core_clk_rate;
+	unsigned num_mdp_clk;
+	int *mdp_core_clk_table;
 #ifdef CONFIG_MSM_BUS_SCALING
 	struct msm_bus_scale_pdata *mdp_bus_scale_table;
 #endif

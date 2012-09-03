@@ -19,6 +19,7 @@
 #include <linux/module.h>
 #include <linux/platform_device.h>
 #include <linux/rfkill.h>
+#include <linux/slab.h>
 #include <asm/gpio.h>
 #include <asm/mach-types.h>
 

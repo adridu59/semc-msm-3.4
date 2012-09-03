@@ -189,6 +189,7 @@ struct msm_otg_platform_data {
 	int  (*chg_init)(int init);
 	int (*config_vddcx)(int high);
 	int (*init_vddcx)(int init);
+	int (*chg_is_initialized)(void);
 
 	struct pm_qos_request pm_qos_req_dma;
 };
