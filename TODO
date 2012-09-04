@@ -1,7 +1,7 @@
 Need fix:
 touch drivers
 boardfile /7x30_fixup/ *DONE*
-drivers/mmc *DONE*
+drivers/mmc
 drivers/net/ppp *DONE*
 
 *some more, but now need only the hallon zImage.
