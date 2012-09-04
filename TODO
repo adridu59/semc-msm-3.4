@@ -1,5 +1,5 @@
 Need fix:
-touch drivers
+touch drivers *DONE*
 boardfile /7x30_fixup/ *DONE*
 drivers/mmc
 drivers/net/ppp *DONE*
