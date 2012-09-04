@@ -185,11 +185,21 @@
 #endif
 
 #define MSM_PMEM_SF_SIZE	0x1E00000
+
+#ifdef CONFIG_FB_MSM_TRIPLE_BUFFER
+#ifdef CONFIG_FB_MSM_HDMI_SII9024A_PANEL
+#define MSM_FB_PRIM_BUF_SIZE   (864 * 480 * 4 * 3) /* 4bpp * 3 Pages */
+#else
+#define MSM_FB_PRIM_BUF_SIZE   (864 * 480 * 4 * 2) /* 4bpp * 2 Pages */
+#endif /* CONFIG_FB_MSM_HDMI_SII9024A_PANEL */
+#else
 #ifdef CONFIG_FB_MSM_HDMI_SII9024A_PANEL
 #define MSM_FB_SIZE             0x530000
 #else
-#define MSM_FB_SIZE		0x500000
+#define MSM_FB_SIZE    0x500000
 #endif /* CONFIG_FB_MSM_HDMI_SII9024A_PANEL */
+#endif /*CONFIG_FB_MSM_TRIPLE_BUFFER*/
+
 #define MSM_GPU_PHYS_SIZE       SZ_4M
 #define MSM_PMEM_CAMERA_SIZE    0x2F00000
 #define MSM_PMEM_ADSP_SIZE      0x1300000
