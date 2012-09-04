@@ -188,9 +188,9 @@
 
 #ifdef CONFIG_FB_MSM_TRIPLE_BUFFER
 #ifdef CONFIG_FB_MSM_HDMI_SII9024A_PANEL
-#define MSM_FB_PRIM_BUF_SIZE   (864 * 480 * 4 * 3) /* 4bpp * 3 Pages */
+#define MSM_FB_SIZE             0x530000
 #else
-#define MSM_FB_PRIM_BUF_SIZE   (864 * 480 * 4 * 2) /* 4bpp * 2 Pages */
+#define MSM_FB_SIZE		0x500000
 #endif /* CONFIG_FB_MSM_HDMI_SII9024A_PANEL */
 #else
 #ifdef CONFIG_FB_MSM_HDMI_SII9024A_PANEL
