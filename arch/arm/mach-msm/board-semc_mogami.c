@@ -266,7 +266,7 @@ EXPORT_SYMBOL(ebi1_phys_offset);
 /* Platform specific HW-ID GPIO mask */
 static const u8 hw_id_gpios[] = {150, 149, 148, 43};
 
-extern void msm_init_pmic_vibrator(void);
+//extern void msm_init_pmic_vibrator(void);
 
 extern int mogami_wifi_power(int on);
 
@@ -3544,7 +3544,7 @@ static struct platform_device android_pmem_audio_device = {
 	.dev = {.platform_data = &android_pmem_audio_pdata},
 };
 
-struct kgsl_cpufreq_voter {
+/*struct kgsl_cpufreq_voter {
 	int idle;
 	struct msm_cpufreq_voter voter;
 };
@@ -3563,7 +3563,7 @@ static struct kgsl_cpufreq_voter kgsl_cpufreq_voter = {
 		.vote = kgsl_cpufreq_vote,
 	},
 };
-
+*/
 struct resource kgsl_3d0_resources[] = {
 	{
 		.name  = KGSL_3D0_REG_MEMORY,
@@ -3918,7 +3918,7 @@ static struct platform_device *devices[] __initdata = {
 	&rndis_device,
 	&android_usb_device,
 	&qsd_device_spi,
-	&msm_device_ssbi6,
+//	&msm_device_ssbi6,
 	&msm_device_ssbi7,
 	&android_pmem_device,
 	&msm_fb_device,
@@ -4109,11 +4109,12 @@ static void __init qup_device_i2c_init(void)
 	}
 }
 
+/*
 static struct msm_ssbi_platform_data msm_i2c_ssbi6_pdata = {
 	.rsl_id = "D:PMIC_SSBI",
 	.controller_type = MSM_SBI_CTRL_SSBI2,
 };
-
+*/
 static struct msm_ssbi_platform_data msm_i2c_ssbi7_pdata = {
 	.rsl_id = "D:CODEC_SSBI",
 	.controller_type = MSM_SBI_CTRL_SSBI,
@@ -4564,7 +4565,8 @@ static void __init msm7x30_init(void)
 	msm7x30_init_uart3();
 
 	msm_spm_init(&msm_spm_data, 1);
-//	msm_acpu_clock_init(&msm7x30_clock_data);
+	platform_device_register(&msm7x30_device_acpuclk);
+	if (machine_is_msm7x30_surf() || machine_is_msm7x30_fluid());
 
 //	hsusb_chg_set_supplicants(hsusb_chg_supplied_to,
 //				  ARRAY_SIZE(hsusb_chg_supplied_to));
@@ -4612,9 +4614,9 @@ static void __init msm7x30_init(void)
 #ifdef CONFIG_TOUCHSCREEN_CY8CTMA300_SPI
 	cypress_touch_gpio_init();
 #endif /* CONFIG_TOUCHSCREEN_CY8CTMA300_SPI */
-	msm_init_pmic_vibrator();
+//	msm_init_pmic_vibrator();
 
-	msm_cpufreq_register_voter(&kgsl_cpufreq_voter.voter);
+//	msm_cpufreq_register_voter(&kgsl_cpufreq_voter.voter);
 
 	i2c_register_board_info(0, msm_i2c_board_info,
 				ARRAY_SIZE(msm_i2c_board_info));
@@ -4628,7 +4630,7 @@ static void __init msm7x30_init(void)
 	spi_register_board_info(spi_board_info,
 		ARRAY_SIZE(spi_board_info));
 
-	msm_device_ssbi6.dev.platform_data = &msm_i2c_ssbi6_pdata;
+//	msm_device_ssbi6.dev.platform_data = &msm_i2c_ssbi6_pdata;
 	msm_device_ssbi7.dev.platform_data = &msm_i2c_ssbi7_pdata;
 
 #if defined(CONFIG_FB_MSM_MDDI_SONY_HVGA_LCD) || \
