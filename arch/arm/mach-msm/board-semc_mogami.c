@@ -265,8 +265,10 @@ EXPORT_SYMBOL(ebi1_phys_offset);
 
 /* Platform specific HW-ID GPIO mask */
 static const u8 hw_id_gpios[] = {150, 149, 148, 43};
+#ifdef CONFIG_MOGAMI_VIBRATOR
+extern void msm_init_pmic_vibrator(void);
+#endif
 
-//extern void msm_init_pmic_vibrator(void);
 
 extern int mogami_wifi_power(int on);
 
@@ -4614,8 +4616,9 @@ static void __init msm7x30_init(void)
 #ifdef CONFIG_TOUCHSCREEN_CY8CTMA300_SPI
 	cypress_touch_gpio_init();
 #endif /* CONFIG_TOUCHSCREEN_CY8CTMA300_SPI */
-//	msm_init_pmic_vibrator();
-
+#ifdef CONFIG_MOGAMI_VIBRATOR
+	msm_init_pmic_vibrator();
+#endif
 //	msm_cpufreq_register_voter(&kgsl_cpufreq_voter.voter);
 
 	i2c_register_board_info(0, msm_i2c_board_info,
