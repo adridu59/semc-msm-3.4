@@ -13,6 +13,7 @@
  * of the License, or (at your option) any later version.
  */
 
+#include <linux/slab.h>
 #include <linux/platform_device.h>
 #include <linux/module.h>
 #include <linux/workqueue.h>
@@ -286,7 +287,7 @@ static void simple_remote_attrs_update_data(const char *buf, size_t count,
 			return;
 
 		/* Making sure that we get values that are in range */
-		if (conversion <= SHORT_MAX && conversion >= SHORT_MIN) {
+		if (conversion <= SHRT_MAX && conversion >= SHRT_MIN) {
 			array[value_count] = (short)conversion;
 		} else {
 			pr_err("%s - Value out of range. Aborting"
