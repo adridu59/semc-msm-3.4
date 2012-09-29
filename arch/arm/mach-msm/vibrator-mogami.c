@@ -158,30 +158,12 @@ static void vibrator_enable(struct timed_output_dev *dev, int value)
 
 static int vibrator_get_time(struct timed_output_dev *dev)
 {
-	int ret;
-	unsigned long flags;
-
-	spin_lock_irqsave(&vibe_lock, flags);
-	switch (vibe_state) {
-	case TASK_KICK_START:
-		ret = long_vibe_time;
-		break;
-	case TASK_START:
-	case TASK_STOP:
-		ret = long_vibe_time;
-		if (hrtimer_active(&vibe_timer)) {
-			ktime_t r = hrtimer_get_remaining(&vibe_timer);
-			ret += r.tv_sec * 1000 + r.tv_nsec / 1000000;
-		}
-		break;
-	case TASK_FORCE_STOP:
-	case TASK_NONE:
-	default:
-		ret = 0;
-		break;
+	if (hrtimer_active(&vibe_timer)) {
+		ktime_t r = hrtimer_get_remaining(&vibe_timer);
+		struct timeval t = ktime_to_timeval(r);
+		return t.tv_sec * 1000 + t.tv_usec / 1000;
 	}
-	spin_unlock_irqrestore(&vibe_lock, flags);
-	return ret;
+	return 0;
 }
 
 static enum hrtimer_restart vibrator_timer_func(struct hrtimer *timer)
