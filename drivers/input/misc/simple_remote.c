@@ -115,7 +115,6 @@ static ssize_t simple_remote_attrs_store_property(struct device *dev,
 {\
 	.attr = { .name = _name,\
 			.mode = (S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH),\
-			.owner = THIS_MODULE\
 			},\
 	.show = simple_remote_attrs_show_property,\
 	.store = simple_remote_attrs_store_property,\

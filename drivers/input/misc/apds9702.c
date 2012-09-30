@@ -296,6 +296,11 @@ static void remove_sysfs_interfaces(struct device *dev)
 		device_remove_file(dev, attributes + i);
 }
 
+
+#define apds9702_suspend NULL
+#define apds9702_resume NULL
+
+
 static int apds9702_device_open(struct input_dev *dev)
 {
 	struct apds9702data *data = input_get_drvdata(dev);
@@ -334,6 +339,7 @@ static int apds9702_probe(struct i2c_client *client,
 			__func__);
 		return -ENODEV;
 	}
+
 	err = pdata->gpio_setup(1);
 	if (err) {
 		dev_err(&client->dev, "%s: gpio_setup failed\n", __func__);
@@ -464,8 +470,7 @@ static const struct i2c_device_id apds9702_id[] = {
 	{ }
 };
 
-#define apds9702_suspend NULL
-#define apds9702_resume NULL
+MODULE_DEVICE_TABLE(i2c, apds9702_id);
 
 static const struct dev_pm_ops apds9702_pm_ops = {
 	.suspend	= apds9702_suspend,

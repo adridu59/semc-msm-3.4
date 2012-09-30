@@ -34,9 +34,9 @@
 
 #include <asm/mach/mmc.h>
 #include <mach/msm_hsusb.h>
-#ifdef CONFIG_PMIC8058
+
 #include <linux/mfd/pmic8058.h>
-#endif
+
 #include <mach/dal_axi.h>
 #include <mach/msm_memtypes.h>
 #include "pm.h"
