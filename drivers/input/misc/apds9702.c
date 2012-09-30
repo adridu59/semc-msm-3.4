@@ -26,7 +26,6 @@
 #include <linux/ctype.h>
 #include <linux/input.h>
 #include <linux/delay.h>
-#include <linux/module.h>
 
 #define APDS9702_VENDOR      0x0001
 
@@ -296,6 +295,29 @@ static void remove_sysfs_interfaces(struct device *dev)
 		device_remove_file(dev, attributes + i);
 }
 
+#if defined(CONFIG_PM)
+static int apds9702_suspend(struct device *dev)
+{
+	struct apds9702data *data = dev_get_drvdata(dev);
+
+	data->pdata->power_mode(0);
+
+	return 0;
+}
+
+static int apds9702_resume(struct device *dev)
+{
+	struct apds9702data *data = dev_get_drvdata(dev);
+
+	data->pdata->power_mode(1);
+
+	return 0;
+}
+#else /* !CONFIG_PM */
+#define apds9702_suspend NULL
+#define apds9702_resume NULL
+#endif /* CONFIG_PM */
+
 static int apds9702_device_open(struct input_dev *dev)
 {
 	struct apds9702data *data = input_get_drvdata(dev);
@@ -329,11 +351,13 @@ static int apds9702_probe(struct i2c_client *client,
 	struct apds9702data *data;
 
 	dev_dbg(&client->dev, "%s\n", __func__);
-	if (!pdata || !pdata->gpio_setup || !pdata->hw_config) {
+	if (!pdata || !pdata->power_mode || !pdata->gpio_setup
+			|| !pdata->hw_config) {
 		dev_err(&client->dev, "%s: platform data is not complete.\n",
 			__func__);
 		return -ENODEV;
 	}
+	pdata->power_mode(1);
 	err = pdata->gpio_setup(1);
 	if (err) {
 		dev_err(&client->dev, "%s: gpio_setup failed\n", __func__);
@@ -454,6 +478,7 @@ static int apds9702_remove(struct i2c_client *client)
 	input_set_drvdata(data->input_dev, NULL);
 	pdata->hw_config(0);
 	pdata->gpio_setup(0);
+	pdata->power_mode(0);
 	kfree(data);
 	i2c_set_clientdata(client, NULL);
 	return 0;
@@ -464,8 +489,7 @@ static const struct i2c_device_id apds9702_id[] = {
 	{ }
 };
 
-#define apds9702_suspend NULL
-#define apds9702_resume NULL
+MODULE_DEVICE_TABLE(i2c, apds9702_id);
 
 static const struct dev_pm_ops apds9702_pm_ops = {
 	.suspend	= apds9702_suspend,
