@@ -35,26 +35,26 @@ static struct as3676_platform_led as3676_leds_mapping[] = {
 	{
 		.name = "red",
 		.sinks = BIT(AS3676_SINK_41),
-		.flags = AS3676_FLAG_RGB | AS3676_FLAG_BLINK,
+		.flags = AS3676_FLAG_RGB | AS3676_FLAG_BLINK | AS3676_FLAG_ALS,
 		.max_current = 25000,
 	},
 	{
 		.name = "green",
 		.sinks = BIT(AS3676_SINK_42),
-		.flags = AS3676_FLAG_RGB | AS3676_FLAG_BLINK,
+		.flags = AS3676_FLAG_RGB | AS3676_FLAG_BLINK | AS3676_FLAG_ALS,
 		.max_current = 25000,
 	},
 	{
 		.name = "blue",
 		.sinks = BIT(AS3676_SINK_43),
-		.flags = AS3676_FLAG_RGB | AS3676_FLAG_BLINK,
+		.flags = AS3676_FLAG_RGB | AS3676_FLAG_BLINK | AS3676_FLAG_ALS,
 		.max_current = 25000,
 	},
 };
 
 struct as3676_platform_data as3676_platform_data = {
 	.leds = as3676_leds_mapping,
-	.num_leds = ARRAY_SIZE(as3676_leds_mapping),
+//	.num_leds = ARRAY_SIZE(as3676_leds_mapping),
 	.als_connected = 1,
 	.als_wait = 100,
 	.dls_connected = false,

@@ -148,7 +148,10 @@ struct registers {
 struct bma250_platform_data {
 	int (*setup)(struct device *);
 	void (*teardown)(struct device *);
+	void (*hw_config)(int enable);
 	struct registers *reg;
+	void (*power_mode)(int enable);
+	unsigned int rate;
 };
 
 #endif /* LINUX_BMA250_MODULE_H */
