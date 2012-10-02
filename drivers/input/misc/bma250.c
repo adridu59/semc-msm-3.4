@@ -86,6 +86,7 @@
 #include <linux/debugfs.h>
 #include <linux/bma250.h>
 #include <linux/delay.h>
+#include <linux/module.h>
 
 #define BMA250_NAME                      "bma250"
 #define BMA250_VENDORID                  0x0001
@@ -590,7 +591,7 @@ static void remove_sysfs_interfaces(struct device *dev)
 		device_remove_file(dev, attributes + i);
 }
 
-#if defined(CONFIG_DEBUG_FS)
+#if defined(CONFIG_DEBUG_FS) && defined(CONFIG_INPUT_BMA250_REG_ACCESS)
 static int bma250_dbfs_open(struct inode *inode, struct file *fp)
 {
 	fp->private_data = inode->i_private;
@@ -971,10 +972,10 @@ static int bma250_open(struct input_dev *dev)
 				  BMA250_NAME,
 				  &dd->ic_dev->dev);
 
-	rc = set_irq_wake(dd->ic_dev->irq, 1);
+	rc = irq_set_irq_wake(dd->ic_dev->irq, 1);
 	if (rc) {
 		dev_err(&dd->ic_dev->dev,
-			"%s: set_irq_wake failed with error %d\n",
+			"%s: irq_set_irq_wake failed with error %d\n",
 			__func__,rc);
 		goto probe_err_wake_irq;
 	}
@@ -995,10 +996,10 @@ static void bma250_release(struct input_dev *dev)
 {
 	int                 rc;
 	struct driver_data *dd = input_get_drvdata(dev);
-	rc = set_irq_wake(dd->ic_dev->irq, 0);
+	rc = irq_set_irq_wake(dd->ic_dev->irq, 0);
 	if (rc)
 		dev_err(&dd->ic_dev->dev,
-			"%s: set_irq_wake failed with error %d\n",
+			"%s: irq_set_irq_wake failed with error %d\n",
 			__func__, rc);
 	free_irq(dd->ic_dev->irq, &dd->ic_dev->dev);
 }
