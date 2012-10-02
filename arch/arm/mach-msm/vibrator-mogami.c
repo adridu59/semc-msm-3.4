@@ -172,7 +172,7 @@ static int vibrator_get_time(struct timed_output_dev *dev)
 		if (hrtimer_active(&vibe_timer)) {
 		ktime_t r = hrtimer_get_remaining(&vibe_timer);
 		struct timeval t = ktime_to_timeval(r);
-			ret += t.tv_sec * 1000 + t.tv_nsec / 1000000;
+			ret += t.tv_sec * 1000 + t.tv_usec / 1000;
 		}
 		break;
 	case TASK_FORCE_STOP:
