@@ -3356,13 +3356,15 @@ int mdp4_overlay_play(struct fb_info *info, struct msmfb_overlay_data *req)
 			/* cndx = 0 */
 			mdp4_lcdc_pipe_queue(0, pipe);
 		}
-	} else if (pipe->mixer_num == MDP4_MIXER1) {
 #ifdef CONFIG_FB_MSM_DTV
+	} else if (pipe->mixer_num == MDP4_MIXER1) {
 		if (ctrl->panel_mode & MDP4_PANEL_DTV)
 			mdp4_dtv_pipe_queue(0, pipe);/* cndx = 0 */
+	}
 #else
 	}
 #endif
+
 	return ret;
 
 mddi:
